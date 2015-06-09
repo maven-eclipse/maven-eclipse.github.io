@@ -97,15 +97,17 @@ stage_4_install() {
 			BASE=`basename $JAR_MAIN .jar`
 			ARTIFACT_ID=org.eclipse.swt.`echo ${BASE#swt-$VERSION-} | sed -r -e 's/\-/\./g'`
 			echo "Version $VERSION | Main $JAR_MAIN | Id $ARTIFACT_ID"
-			MVN_INSTALL="mvn install:install-file \
-			-DgroupId=org.eclipse.swt \
-			-DartifactId=$ARTIFACT_ID \
-			-Dversion=$VERSION \
-			-Dpackaging=jar \
-			-DlocalRepositoryPath=$REPO \
-			-DcreateChecksum=true"
-			$MVN_INSTALL -Dsources=$JAR_MAIN.src -Dfile=$JAR_MAIN
-			$MVN_INSTALL -Dclassifier=debug -Dfile=$JAR_MAIN.debug
+			mvn deploy:deploy-file \
+				-DgroupId=org.eclipse.swt \
+				-DartifactId=$ARTIFACT_ID \
+				-Dversion=$VERSION \
+				-Durl=file:///$REPO \
+				-Dfile=$JAR_MAIN \
+				-Dsources=$JAR_MAIN.src \
+				-Dfiles=$JAR_MAIN.debug \
+				-Dclassifiers=debug \
+				-Dtypes=zip \
+				-DupdateReleaseInfo=true
 		done;
 		cd ..
 	done;
