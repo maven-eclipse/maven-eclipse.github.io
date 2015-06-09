@@ -3,6 +3,9 @@
 # Instead of a very complicated java based downloader, 
 # use basic bash to parse the raw HTML for download links, sort, extract, and install SWT
 #
+# Its best to run each stage individually like:
+# bash -c "rm -rf maven/org; source scrape-swt.sh; set -e; stage_4_install"
+#
 # TODO: Somehow ignore maven versions we already have. 
 # Until then source this script and run each stage manually
 # Remove existing releases from tmp/urls.txt after stage_1_scrape
