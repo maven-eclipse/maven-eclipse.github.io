@@ -82,10 +82,22 @@ stage_3_extract() {
 			FILE_BASE=`basename $FILE_TO_EXTRACT .zip`
 			unzip $FILE_TO_EXTRACT "swt.jar"
 			mv "swt.jar" $FILE_BASE.jar
-			unzip $FILE_TO_EXTRACT "swt-debug.jar"
-			mv "swt-debug.jar" $FILE_BASE.jar.debug
-			unzip $FILE_TO_EXTRACT "src.zip"
-			mv "src.zip" $FILE_BASE.jar.src
+			if [[ $FILE_TO_EXTRACT == *"wce"* ]]
+			then
+				#special wce handling on 4.2 and 4.2.1
+				mkdir wcetmp
+				unzip $FILE_TO_EXTRACT "*.dll" -d wcetmp
+				mv wcetmp/* $FILE_BASE.dll
+				rm -rf wcetmp
+
+				unzip $FILE_TO_EXTRACT "swtsrc.zip"
+				mv "swtsrc.zip" $FILE_BASE.jar.src
+			else
+				unzip $FILE_TO_EXTRACT "swt-debug.jar"
+				mv "swt-debug.jar" $FILE_BASE.jar.debug
+				unzip $FILE_TO_EXTRACT "src.zip"
+				mv "src.zip" $FILE_BASE.jar.src
+			fi;
 		done;
 		cd ..
 	done;
@@ -101,6 +113,17 @@ stage_4_install() {
 			BASE=`basename $JAR_MAIN .jar`
 			ARTIFACT_ID=org.eclipse.swt.`echo ${BASE#swt-$VERSION-} | sed -r -e 's/\-/\./g'`
 			echo "Version $VERSION | Main $JAR_MAIN | Id $ARTIFACT_ID"
+			if [[ $ARTIFACT_ID == *"wce"* ]]
+			then
+				SUFFIX="-Dfiles=$BASE.dll \
+				-Dclassifiers=dll \
+				-Dtypes=dll"
+			else
+				SUFFIX="-Dfiles=$JAR_MAIN.debug \
+				-Dclassifiers=debug \
+				-Dtypes=zip"
+			fi;
+
 			mvn deploy:deploy-file \
 				-DgroupId=org.eclipse.swt \
 				-DartifactId=$ARTIFACT_ID \
@@ -108,10 +131,8 @@ stage_4_install() {
 				-Durl=file:///$REPO \
 				-Dfile=$JAR_MAIN \
 				-Dsources=$JAR_MAIN.src \
-				-Dfiles=$JAR_MAIN.debug \
-				-Dclassifiers=debug \
-				-Dtypes=zip \
-				-DupdateReleaseInfo=true
+				-DupdateReleaseInfo=true \
+				$SUFFIX
 		done;
 		cd ..
 	done;
