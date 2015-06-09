@@ -91,7 +91,8 @@ stage_3_extract() {
 
 stage_4_install() {
 	cd downloads
-	for VERSION in `ls -d */ | rev | cut -c 2- | rev`; do
+	#Special version sort to account for 4.2 < 4.2.1
+	for VERSION in `ls -d */ | sort -t. -n -k1,1 -k2,2 -k3,3 -k4,4 | rev | cut -c 2- | rev`; do
 		cd $VERSION
 		for JAR_MAIN in `ls *.jar`; do 
 			BASE=`basename $JAR_MAIN .jar`
