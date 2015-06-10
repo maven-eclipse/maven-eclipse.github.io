@@ -2,20 +2,11 @@
 
 SWT is not available in Maven Central making it difficult to use in Maven projects. Existing maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain debug jar, or don't automate downloading and extracting the JARs. 
 
-This repo contains SWT 4.2 to 4.5RC2a on all supported platforms
+Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the dev-releases repository](http://github.com/swt-maven/dev-releases)
+
+This repo contains SWT 4.2 to 4.4.2 on all supported platforms
+ 
  - Stable releases
-  - 4.5RC4 - 3 Jun 2015
-  - 4.5RC3 - 28 May 2015
-  - 4.5RC2a - 22 May 2015
-  - 4.5RC1 - 14 May 2015
-  - 4.5M7 - 30 Apr 2015
-  - 4.5M6 - 20 Mar 2015
-  - 4.5M5a - 3 Feb 2015
-  - 4.5M5 - 29 Jan 2015
-  - 4.5M4 - 10 Dec 2014
-  - 4.5M3 - 29 Oct 2014
-  - 4.5M2 - 18 Sep 2014
-  - 4.5M1 - 6 Aug 2014
   - 4.4.2 - 4 Feb 2015
   - 4.4.1 - 25 Sep 2014 
   - 4.4 - 6 Jun 2014
@@ -42,6 +33,8 @@ This repo contains SWT 4.2 to 4.5RC2a on all supported platforms
   - org.eclipse.swt.gtk.linux.ppc64le
   - org.eclipse.swt.gtk.linux.s390
   - org.eclipse.swt.gtk.linux.s390x
+  - org.eclipse.swt.win32.wce_ppc.arm.j2se (4.2 and 4.2.1 only, see Windows CE section at the end)
+  - org.eclipse.swt.win32.wce_ppc.arm.j2me (4.2 and 4.2.1 only, see Windows CE section at the end)
  - Each ZIP is extracted as follows
   - swt.jar - Main JAR
   - swt-debug.jar - Add `<classifier>debug</classifier>` 
@@ -68,8 +61,8 @@ Add this to your pom.xml:
 ```
 <repositories>
 	<repository>
-		<id>maven-eclipse-repo</id>
-		<url>http://maven-eclipse.github.io/maven</url>
+		<id>swt-maven-repo</id>
+		<url>http://swt-maven.github.io/maven</url>
 	</repository>
 </repositories>
 ```
@@ -111,3 +104,11 @@ Then add dependencies for each platform you wish to support. The most common are
 </dependencies>
 ```
 
+## WCE - Windows CE
+**Ignore this section unless your targeting Windows CE**
+
+These were released differently from all other platforms
+
+ - Only released for 4.2 and 4.2.1
+ - DLL is a standalone artifact: classifier dll, extension dll
+ - No debug jar was released
