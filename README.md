@@ -2,11 +2,12 @@
 
 SWT is not available in Maven Central making it difficult to use in Maven projects. Existing maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain debug jar, or don't automate downloading and extracting the JARs. 
 
-Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the dev-releases repository](http://github.com/swt-maven/dev-releases)
+Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the dev-releases repository](http://github.com/maven-eclipse/dev-releases)
 
-This repo contains SWT 4.2 to 4.4.2 on all supported platforms
+This repo contains SWT 4.2 to 4.5 on all supported platforms
  
  - Stable releases
+  - 4.5 - 3 Jun 2015
   - 4.4.2 - 4 Feb 2015
   - 4.4.1 - 25 Sep 2014 
   - 4.4 - 6 Jun 2014
@@ -18,8 +19,8 @@ This repo contains SWT 4.2 to 4.4.2 on all supported platforms
   - 4.2 - 8 Jun 2012
  - Platforms
   - org.eclipse.swt.win32.win32.x86
-  - org.eclipse.swt.win32.win32.x86_64  
-  - org.eclipse.swt.cocoa.macosx
+  - org.eclipse.swt.win32.win32.x86_64
+  - org.eclipse.swt.cocoa.macosx (Obsoleted after 4.4.2)
   - org.eclipse.swt.cocoa.macosx.x86_64
   - org.eclipse.swt.gtk.linux.x86
   - org.eclipse.swt.gtk.linux.x86_64
@@ -31,8 +32,8 @@ This repo contains SWT 4.2 to 4.4.2 on all supported platforms
   - org.eclipse.swt.gtk.linux.ppc
   - org.eclipse.swt.gtk.linux.ppc64
   - org.eclipse.swt.gtk.linux.ppc64le
-  - org.eclipse.swt.gtk.linux.s390
-  - org.eclipse.swt.gtk.linux.s390x
+  - org.eclipse.swt.gtk.linux.s390 (Obsoleted after 4.4.2)
+  - org.eclipse.swt.gtk.linux.s390x (Obsoleted after 4.4.2)
   - org.eclipse.swt.win32.wce_ppc.arm.j2se (4.2 and 4.2.1 only, see Windows CE section at the end)
   - org.eclipse.swt.win32.wce_ppc.arm.j2me (4.2 and 4.2.1 only, see Windows CE section at the end)
  - Each ZIP is extracted as follows
@@ -89,11 +90,6 @@ Then add dependencies for each platform you wish to support. The most common are
 	<dependency>
 		<groupId>org.eclipse.swt</groupId>
 		<artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
-		<version>${swt.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.eclipse.swt</groupId>
-		<artifactId>org.eclipse.swt.cocoa.macosx</artifactId>
 		<version>${swt.version}</version>
 	</dependency>
 	<dependency>
