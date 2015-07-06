@@ -1,6 +1,6 @@
 # Eclipse SWT for Maven Users
 
-SWT is not available in Maven Central making it difficult to use in Maven projects. Existing maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain debug jar, or don't automate downloading and extracting the JARs. 
+SWT is not available in Maven Central making it difficult to use in Maven projects. Existing maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain debug jar, or don't provide a reliable, automatic way to update or reproduce the repository. 
 
 Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the dev-releases repository](http://github.com/maven-eclipse/dev-releases)
 
@@ -63,7 +63,7 @@ Add this to your pom.xml:
 <repositories>
 	<repository>
 		<id>swt-maven-repo</id>
-		<url>http://swt-maven.github.io/maven</url>
+		<url>http://maven-eclipse.github.io/maven</url>
 	</repository>
 </repositories>
 ```
