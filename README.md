@@ -1,6 +1,6 @@
 # Eclipse SWT for Maven Users
 
-SWT is not available in Maven Central making it difficult to use in Maven projects. Existing maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain debug jar, or don't provide a reliable, automatic way to update or reproduce the repository. 
+SWT is not available in Maven Central making it difficult to use in Maven projects. Existing Maven repos are either not maintained and abandoned, don't have all platforms, don't contain sources, don't contain the debug jar, or don't provide a reliable, automatic way to update or reproduce the repository. This repo uses a script to repackage the official SWT releases into a Maven repository.
 
 Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the dev-releases repository](http://github.com/maven-eclipse/dev-releases)
 
@@ -55,9 +55,9 @@ As of creating this project, existing public SWT maven repositories are not usab
  - https://bitbucket.org/confluenity/maven ([from StackOverflow](http://stackoverflow.com/a/19857630)) - Abandoned, original domain doesn't work, bitbucket repo isn't web accessible, last release is 4.3.1
 
 # How to use
-If you were using [swt-repo on Google Code](http://code.google.com/p/swt-repo/) this is a drop in replacement
+If you were using [swt-repo on Google Code](http://code.google.com/p/swt-repo/) this is a drop in replacement. 
 
-Add this to your pom.xml:
+Add this to your pom.xml: (Gradle, Ivy, and other builders users: The information is the same)
 
 ```
 <repositories>
@@ -103,7 +103,7 @@ Then add dependencies for each platform you wish to support. The most common are
 ## WCE - Windows CE
 **Ignore this section unless your targeting Windows CE**
 
-These were released differently from all other platforms
+Eclipse released these differently from all other platforms
 
  - Only released for 4.2 and 4.2.1
  - DLL is a standalone artifact: classifier dll, extension dll
