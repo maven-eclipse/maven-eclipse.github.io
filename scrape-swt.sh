@@ -121,7 +121,7 @@ stage_4_install() {
 			else
 				SUFFIX="-Dfiles=$JAR_MAIN.debug \
 				-Dclassifiers=debug \
-				-Dtypes=zip"
+				-Dtypes=jar"
 			fi;
 
 			mvn deploy:deploy-file \
