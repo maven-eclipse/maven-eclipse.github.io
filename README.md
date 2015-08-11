@@ -62,7 +62,7 @@ Add this to your pom.xml: (Gradle, Ivy, and other builders users: The informatio
 ```
 <repositories>
 	<repository>
-		<id>swt-maven-repo</id>
+		<id>maven-eclipse-repo</id>
 		<url>http://maven-eclipse.github.io/maven</url>
 	</repository>
 </repositories>
