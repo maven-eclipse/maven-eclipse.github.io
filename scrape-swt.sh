@@ -67,7 +67,7 @@ stage_1_scrape() {
 	# 3) Only care about releases and milestones
 	# 4) Filter out duplicates
 	curl -L $MIRROR > index.html
-	RELEASES=$( cat index.html | grep -E -o "$DROPS_DIR/[a-zA-Z0-9\.-]+" | grep -E "^$DROPS_DIR/[SRM]" | sort | uniq )
+	RELEASES=$( cat index.html | grep -E -o "$DROPS_DIR/[a-zA-Z0-9\.-]+" | grep -E "^$DROPS_DIR/[R]-" | sort | uniq )
 
 	stage_1_scrape_releases $RELEASES
 	cd ..
