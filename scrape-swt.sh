@@ -4,7 +4,7 @@
 # use basic bash to parse the raw HTML for download links, sort, extract, and install SWT
 #
 # Its best to run each stage individually like:
-# bash -c "rm -rf maven/org; source scrape-swt.sh; set -e; stage_4_install"
+# bash -c "source scrape-swt.sh; set -e; stage_4_install"
 #
 # TODO: Somehow ignore maven versions we already have. 
 # Until then source this script and run each stage manually
@@ -19,11 +19,13 @@ then
 	MIRROR=http://download.eclipse.org/eclipse/downloads/
 	HASH_EXT=".sha512"
 	HASH_CMD="sha512sum"
+	DROPS_DIR="drops4"
 else
 	echo "Archive release mode"
 	MIRROR=http://archive.eclipse.org/eclipse/downloads/
 	HASH_EXT=".sha1"
 	HASH_CMD="sha1sum"
+	DROPS_DIR="drops4" #todo
 fi
 
 REPO=$PWD/maven
@@ -34,17 +36,8 @@ stage_0_init() {
 	rm -rf tmp downloads
 }
 
-stage_1_scrape() {
-	mkdir -p tmp
-	cd tmp
-	# 1) Get HTML of root (follow redirects)
-	# 2) Ghetto match all urls in the common drops4 dir
-	# 3) Only care about releases and milestones
-	# 4) Filter out duplicates
-	curl -L $MIRROR > index.html
-	RELEASES=$( cat index.html | grep -E -o 'drops4/[a-zA-Z0-9\.-]+' | grep -E '^drops4/[SR]' | sort | uniq )
-
-	for CUR_RELEASE in $RELEASES;
+stage_1_scrape_releases() {
+	for CUR_RELEASE in "$@";
 	do
 		# for loop over above
 		# 1) Get HTML of specific release index (follow redirects)
@@ -52,7 +45,9 @@ stage_1_scrape() {
 		# 3) Cut off the ending "> (apparently 3 is needed for a hidden character)
 		#TODO: SWT specific
 		RELEASE_FILE=$( basename $CUR_RELEASE ).html
-		curl -L $MIRROR/$CUR_RELEASE > $RELEASE_FILE
+		URL=$MIRROR$CUR_RELEASE/
+		echo "Dumping $URL"
+		curl -L $URL > $RELEASE_FILE
 		DIST_FILES=$( cat $RELEASE_FILE | grep -E -o 'swt-[a-zA-Z0-9\._-]+\">' | grep -v "sha1\|md5\|sha512" | rev | cut -c 3- | rev | sort | uniq )
 
 		for CUR_FILE in $DIST_FILES;
@@ -62,6 +57,19 @@ stage_1_scrape() {
 			echo $MIRROR/$CUR_RELEASE/checksum/$CHECKSUM_FILE >> urls.txt
 		done;
 	done;
+}
+
+stage_1_scrape() {
+	mkdir -p tmp
+	cd tmp
+	# 1) Get HTML of root (follow redirects)
+	# 2) Ghetto match all urls in the common drops4 dir
+	# 3) Only care about releases and milestones
+	# 4) Filter out duplicates
+	curl -L $MIRROR > index.html
+	RELEASES=$( cat index.html | grep -E -o "$DROPS_DIR/[a-zA-Z0-9\.-]+" | grep -E "^$DROPS_DIR/[R]-" | sort | uniq )
+
+	stage_1_scrape_releases $RELEASES
 	cd ..
 }
 
