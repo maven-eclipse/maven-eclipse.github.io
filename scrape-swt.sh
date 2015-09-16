@@ -4,7 +4,7 @@
 # use basic bash to parse the raw HTML for download links, sort, extract, and install SWT
 #
 # Its best to run each stage individually like:
-# bash -c "rm -rf maven/org; source scrape-swt.sh; set -e; stage_4_install"
+# bash -c "source scrape-swt.sh; set -e; stage_4_install"
 #
 # TODO: Somehow ignore maven versions we already have. 
 # Until then source this script and run each stage manually
@@ -19,11 +19,13 @@ then
 	MIRROR=http://download.eclipse.org/eclipse/downloads/
 	HASH_EXT=".sha512"
 	HASH_CMD="sha512sum"
+	DROPS_DIR="drops4"
 else
 	echo "Archive release mode"
 	MIRROR=http://archive.eclipse.org/eclipse/downloads/
 	HASH_EXT=".sha1"
 	HASH_CMD="sha1sum"
+	DROPS_DIR="drops4" #todo
 fi
 
 REPO=$PWD/maven
@@ -65,7 +67,7 @@ stage_1_scrape() {
 	# 3) Only care about releases and milestones
 	# 4) Filter out duplicates
 	curl -L $MIRROR > index.html
-	RELEASES=$( cat index.html | grep -E -o 'drops4/[a-zA-Z0-9\.-]+' | grep -E '^drops4/[SRM]' | sort | uniq )
+	RELEASES=$( cat index.html | grep -E -o "$DROPS_DIR/[a-zA-Z0-9\.-]+" | grep -E "^$DROPS_DIR/[SRM]" | sort | uniq )
 
 	stage_1_scrape_releases $RELEASES
 	cd ..
