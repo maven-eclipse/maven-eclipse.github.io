@@ -18,7 +18,7 @@ cd maven/org/eclipse/swt/org.eclipse.swt.gtk.linux.x86_64
 for i in `ls -d */ | rev | cut -c 2- | rev`; do
 	EXISTING_RELEASES+=($i)
 done
-cd $rootDir
+cd "$rootDir"
 
 OTHER_EXISTING_RELEASES_FILE="scrape-check-existing.txt"
 if [[ -f "$OTHER_EXISTING_RELEASES_FILE" ]]; then
@@ -42,6 +42,7 @@ RELEASES=$( cat index.html | grep -E -o "$DROPS_DIR/[a-zA-Z0-9\.-]+" | grep -E "
 NEW_RELEASES=()
 for curReleasePath in $RELEASES; do
 	curReleaseVersion=$( echo $curReleasePath | cut -d'/' -f2 | cut -d'-' -f2 )	
+	echo "Found version $curReleaseVersion at $curReleasePath"
 	
 	#temporary workaround as 3.x releases aren't yet in the repo
 	if [[ "$curReleaseVersion" == 3* ]]; then
