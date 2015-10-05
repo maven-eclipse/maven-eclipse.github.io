@@ -47,9 +47,9 @@ Want JFace support? Please see [Issue #1](https://github.com/maven-eclipse/maven
 # Why?
 Eclipse has an open bug report to to publish SWT to Maven however its been stalled since 2007: https://bugs.eclipse.org/bugs/show_bug.cgi?id=199302
 
-Currently the only available automated downloader is [swt-release-fetcher](http://github.com/hennr/swt-release-fetcher) which only supports the latest release and is very complex. This has been replaced with a much simpler and more flexible bash script that you can even use to setup your own independent repo 
+Currently the only available automated downloader is [swt-release-fetcher](http://github.com/hennr/swt-release-fetcher) which is no longer maintained. It has been replaced with a much simpler and more flexible bash script that you can even use to setup your own independent repo. 
 
-As of creating this project, existing public SWT maven repositories are not usable
+As of creating this project, existing public SWT maven repositories are not usable:
  - https://code.google.com/p/swt-repo/ - Abandoned, last release is 4.4
  - https://github.com/urish/swt-repo - Deleted
  - https://github.com/swt-repo/swt-repo - Abandoned, last release 4.2.2 only for linux
