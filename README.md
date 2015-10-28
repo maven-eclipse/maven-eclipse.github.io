@@ -77,6 +77,8 @@ Then add dependencies for each platform you wish to support. The most common are
 		<groupId>org.eclipse.swt</groupId>
 		<artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
 		<version>${swt.version}</version>
+		<!-- To use the debug jar, add this -->
+		<classifier>debug</classifier>
 	</dependency>
 	<dependency>
 		<groupId>org.eclipse.swt</groupId>
