@@ -48,7 +48,7 @@ This repo contains SWT 4.2 to 4.5 on all supported platforms
 Want JFace support? Please see [Issue #1](https://github.com/maven-eclipse/maven-eclipse.github.io/issues/1)
   
 # Why?
-Eclipse has an open bug report to to publish SWT to Maven however its been stalled since 2007: https://bugs.eclipse.org/bugs/show_bug.cgi?id=199302
+[Eclipse #199302](https://bugs.eclipse.org/bugs/show_bug.cgi?id=199302) was an open bug report to to publish SWT to Maven however its been stalled since 2007. Recently this has been reconsidered in [Eclipse #484004](https://bugs.eclipse.org/bugs/show_bug.cgi?id=484004), also see [Issue #6](https://github.com/maven-eclipse/maven-eclipse.github.io/issues/6)
 
 Currently the only available automated downloader is [swt-release-fetcher](http://github.com/hennr/swt-release-fetcher) which is no longer maintained. It has been replaced with a much simpler and more flexible bash script that you can even use to setup your own independent repo. 
 
