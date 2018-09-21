@@ -84,12 +84,13 @@ stage_2_download() {
 stage_3_extract() {
 	cd downloads
 	for VERSION in `ls *.zip | cut -d '-' -f 2  | sort | uniq`; do
-		mkdir $VERSION
+		mkdir -p $VERSION
 		cd $VERSION
 		for FILE_TO_EXTRACT in `ls ../swt-$VERSION-*.zip`; do
 			FILE_BASE=`basename $FILE_TO_EXTRACT .zip`
 			unzip $FILE_TO_EXTRACT "swt.jar"
 			mv "swt.jar" $FILE_BASE.jar
+			echo "Extracting $FILE_TO_EXTRACT"
 			if [[ $FILE_TO_EXTRACT == *"wce"* ]]
 			then
 				#special wce handling on 4.2 and 4.2.1
@@ -101,8 +102,9 @@ stage_3_extract() {
 				unzip $FILE_TO_EXTRACT "swtsrc.zip"
 				mv "swtsrc.zip" $FILE_BASE.jar.src
 			else
-				unzip $FILE_TO_EXTRACT "swt-debug.jar"
-				mv "swt-debug.jar" $FILE_BASE.jar.debug
+				# Ignore debug package, if not present
+				unzip $FILE_TO_EXTRACT "swt-debug.jar" || cat /dev/null
+				mv "swt-debug.jar" $FILE_BASE.jar.debug || cat /dev/null
 				unzip $FILE_TO_EXTRACT "src.zip"
 				mv "src.zip" $FILE_BASE.jar.src
 			fi;
@@ -116,6 +118,7 @@ stage_4_install() {
 	cd downloads
 	#Special version sort to account for 4.2 < 4.2.1
 	for VERSION in `ls -d */ | sort -t. -n -k1,1 -k2,2 -k3,3 -k4,4 | rev | cut -c 2- | rev`; do
+		echo "Selected version $VERSION"
 		cd $VERSION
 		for JAR_MAIN in `ls *.jar`; do 
 			BASE=`basename $JAR_MAIN .jar`
@@ -131,7 +134,10 @@ stage_4_install() {
 				-Dclassifiers=debug \
 				-Dtypes=jar"
 			fi;
-
+			# Ignore debug package, if not present
+			if [[ $SUFFIX = *"debug"* && ! -f "$JAR_MAIN.debug" ]]; then
+			    SUFFIX=""
+			fi;
 			mvn deploy:deploy-file \
 				-DgroupId=org.eclipse.swt \
 				-DartifactId=$ARTIFACT_ID \
