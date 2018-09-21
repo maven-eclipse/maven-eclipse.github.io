@@ -7,6 +7,9 @@ Looking for the 4.5 milestone (M) and release candidate (RC) releases? [See the 
 This repo contains SWT 4.2 to 4.5 on all supported platforms
  
  - Stable releases
+  - 4.9 - 6 Sep 2018
+  - 4.8 - 11 Jun 2018
+  - 4.7.3a - 30 Mar 2018
   - 4.6.1 - 7 Sep 2016
   - 4.6 - 6 Jun 2016
   - 4.5.2 - 12 Feb 2016
